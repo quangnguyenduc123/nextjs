@@ -8,6 +8,8 @@ function Home() {
       <ul>
         <li>
           <Link href="/portfolio">Portfolio page</Link>
+        </li>
+        <li>
           <Link href="/clients">Client page</Link>
         </li>
       </ul>
