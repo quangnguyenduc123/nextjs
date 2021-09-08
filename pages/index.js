@@ -1,9 +1,29 @@
-import styles from '../styles/Home.module.css'
+import fs from 'fs'
+import path from 'path'
 
-export default function Home() {
+const Home = (props) => {
+
+  const { products } = props
+
   return (
-    <div className={styles.container}>
-      <h1>Hello Next World!</h1>
-    </div>
+    <ul>
+      {products.map(product =>
+        <li key={product.id}>{product.title}</li>
+      )}
+    </ul>
   )
 }
+
+export async function getStaticProps() {
+  const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json')
+  const jsonData = await fs.readFileSync(filePath)
+  const data = JSON.parse(jsonData)
+
+  return {
+    props: {
+      products: data.products,
+    }
+  }
+}
+
+export default Home
