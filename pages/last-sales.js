@@ -3,8 +3,8 @@ import useSWR from 'swr'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
-function LastSalesPage() {
-    const [sales, setSales] = useState()
+function LastSalesPage(props) {
+    const [sales, setSales] = useState(props.sales)
     // const [isLoading, setIsLoading] = useState(false)
 
     // useEffect(() => {
@@ -40,7 +40,6 @@ function LastSalesPage() {
 
     useEffect(() => {
         const transformedSales = []
-        console.log(data)
         for (const key in data) {
             transformedSales.push({
                 id: key,
@@ -53,7 +52,7 @@ function LastSalesPage() {
 
     if (error) return <p>Error</p>
 
-    if (!data || !sales) return <p>Loading...............</p>
+    if (!data & !sales) return <p>Loading...............</p>
 
     if (!sales) <p>No Data</p>
 
@@ -64,6 +63,28 @@ function LastSalesPage() {
             </li>
         ))}
     </ul>
+}
+
+export async function getStaticProps() {
+
+    const response = await fetch('https://webapp-672a1.firebaseio.com/sales.json')
+    const data = await response.json()
+    const transformedSales = []
+
+    for (const key in data) {
+        transformedSales.push({
+            id: key,
+            username: data[key].username,
+            volume: data[key].volume
+        })
+    }
+
+    return {
+        props: {
+            sales: transformedSales
+        },
+        revalidate: 10
+    }
 }
 
 export default LastSalesPage
