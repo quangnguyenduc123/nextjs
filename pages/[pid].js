@@ -13,7 +13,7 @@ const ProductDetailPage = (props) => {
 async function getData() {
     const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json')
     const jsonData = await fs.readFileSync(filePath)
-    const data = await getData()
+    const data = await getData(jsonData)
 
     return data
 }
@@ -24,6 +24,9 @@ export async function getStaticProps(context) {
 
     const product = data.products.find(product => product.id === productId)
 
+    if (!product) {
+        return { notFound: true }
+    }
 
     return {
         props: {
@@ -40,7 +43,7 @@ export async function getStaticPaths() {
 
     return {
         paths: pathsWithParams,
-        fallback: 'blocking'
+        fallback: false
     }
 }
 
