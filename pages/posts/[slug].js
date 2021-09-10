@@ -1,15 +1,24 @@
+import { Fragment } from "react"
+import Head from 'next/head'
 import PostContent from "../../components/posts/post-detail/post-content"
 import { getPostsFiles, getPostData } from '../../lib/posts-util'
 
 function PostDetailPage(props) {
     const post = props.post
-    return <PostContent
-        title={post.title}
-        image={post.image}
-        slug={post.slug}
-        content={post.content}
-    >
-    </PostContent>
+    return (
+        <Fragment>
+            <Head>
+                <title>{post.title}</title>
+                <meta name="description" content={post.excerpt} />
+            </Head><PostContent
+                title={post.title}
+                image={post.image}
+                slug={post.slug}
+                content={post.content}
+            >
+            </PostContent>
+        </Fragment>
+    )
 }
 
 export function getStaticPaths() {
