@@ -1,9 +1,7 @@
-import styles from '../styles/Home.module.css'
+import StartingPageContent from '../components/starting-page/starting-page';
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <h1>Hello Next World!</h1>
-    </div>
-  )
+function HomePage() {
+  return <StartingPageContent />;
 }
+
+export default HomePage;
